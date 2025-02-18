@@ -15,7 +15,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Stack } from "@mui/material";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 function createData(
   name: string,
@@ -36,15 +36,13 @@ const rows = [
 ];
 
 type FormValues = {
-  name: string;
-  email: string;
   type: string;
   origin: string;
 };
 
 export default function Info() {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
@@ -55,39 +53,21 @@ export default function Info() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="p-4 border rounded">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
-          <TextField
-            id="outlined-basic"
-            label="Type Description"
-            variant="outlined"
-            {...register("type", { required: "Type is required" })}
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                id="outlined-basic"
+                label="Type Description"
+                variant="outlined"
+              />
+            )}
           />
           {errors.type && <p className="text-red-500">{errors.type.message}</p>}
         </Stack>
-
-        {/* <label className="block mb-2">
-          Type:
-          <input
-            {...register("name", { required: "Name is required" })}
-            className="border p-2 w-full"
-          />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-        </label> */}
-
-        <label className="block mb-2">
-          Origin:
-          <input
-            {...register("email", {
-              required: "Email is required",
-              pattern: { value: /^\S+@\S+$/, message: "Invalid email" },
-            })}
-            className="border p-2 w-full"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </label>
 
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Age</InputLabel>
