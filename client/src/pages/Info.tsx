@@ -7,6 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Stack } from "@mui/material";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 
 function createData(
@@ -30,6 +38,8 @@ const rows = [
 type FormValues = {
   name: string;
   email: string;
+  type: string;
+  origin: string;
 };
 
 export default function Info() {
@@ -46,17 +56,27 @@ export default function Info() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 border rounded">
-        <label className="block mb-2">
-          Name:
+        <Stack spacing={2}>
+          <TextField
+            id="outlined-basic"
+            label="Type Description"
+            variant="outlined"
+            {...register("type", { required: "Type is required" })}
+          />
+          {errors.type && <p className="text-red-500">{errors.type.message}</p>}
+        </Stack>
+
+        {/* <label className="block mb-2">
+          Type:
           <input
             {...register("name", { required: "Name is required" })}
             className="border p-2 w-full"
           />
           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-        </label>
+        </label> */}
 
         <label className="block mb-2">
-          Email:
+          Origin:
           <input
             {...register("email", {
               required: "Email is required",
@@ -69,12 +89,24 @@ export default function Info() {
           )}
         </label>
 
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
-          Submit
-        </button>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            // value={age}
+            label="Age"
+            // onChange={handleChange}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Button variant="contained" type="submit">
+          Add
+        </Button>
       </form>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
