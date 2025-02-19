@@ -38,6 +38,9 @@ const rows = [
 type FormValues = {
   type: string;
   origin: string;
+  born: string;
+  died: string;
+  remarks: string;
 };
 
 export default function Info() {
@@ -46,6 +49,11 @@ export default function Info() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+
+  const [origin, setOrigin] = React.useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setOrigin(event.target.value);
+  };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Form Data:", data);
@@ -66,29 +74,52 @@ export default function Info() {
               />
             )}
           />
-          {errors.type && <p className="text-red-500">{errors.type.message}</p>}
-
           <Controller
             name="origin"
             control={control}
             render={({ field }) => (
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                // value={age}
-                label="Age"
-                // onChange={handleChange}
-              >
-                <MenuItem value={"domestic"}>Domestic</MenuItem>
-                <MenuItem value={"store"}>Store</MenuItem>
-              </Select>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={origin}
+                  label="Origin"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"domestic"}>Domestic</MenuItem>
+                  <MenuItem value={"store"}>Store</MenuItem>
+                </Select>
+              </FormControl>
             )}
           />
-        </Stack>
+          <Controller
+            name="born"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                id="outlined-basic"
+                label="Born / Aquired Date"
+                variant="outlined"
+              />
+            )}
+          />
+          <Controller
+            name="remarks"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                id="outlined-basic"
+                label="Remarks"
+                variant="outlined"
+              />
+            )}
+          />
 
-        <Button variant="contained" type="submit">
-          Add
-        </Button>
+          <Button variant="contained" type="submit">
+            Add
+          </Button>
+        </Stack>
       </form>
       {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
