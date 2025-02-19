@@ -79,34 +79,18 @@ export default function Info() {
                 label="Age"
                 // onChange={handleChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={"domestic"}>Domestic</MenuItem>
+                <MenuItem value={"store"}>Store</MenuItem>
               </Select>
             )}
           />
-
-          {/* <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              // value={age}
-              label="Age"
-              // onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
         </Stack>
 
         <Button variant="contained" type="submit">
           Add
         </Button>
       </form>
-      <TableContainer component={Paper}>
+      {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -134,7 +118,7 @@ export default function Info() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 }
