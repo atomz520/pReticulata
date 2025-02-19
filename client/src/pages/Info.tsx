@@ -67,22 +67,40 @@ export default function Info() {
             )}
           />
           {errors.type && <p className="text-red-500">{errors.type.message}</p>}
-        </Stack>
 
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            // value={age}
-            label="Age"
-            // onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
+          <Controller
+            name="origin"
+            control={control}
+            render={({ field }) => (
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={age}
+                label="Age"
+                // onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            )}
+          />
+
+          {/* <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              // value={age}
+              label="Age"
+              // onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl> */}
+        </Stack>
 
         <Button variant="contained" type="submit">
           Add
