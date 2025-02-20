@@ -7,6 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -55,6 +61,8 @@ export default function Info() {
     setOrigin(event.target.value);
   };
 
+  const [bornDate, setBornDate] = React.useState<Dayjs | null>(null);
+
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Form Data:", data);
   };
@@ -79,7 +87,7 @@ export default function Info() {
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <InputLabel id="demo-simple-select-label">Origin</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
@@ -97,11 +105,15 @@ export default function Info() {
             name="born"
             control={control}
             render={({ field }) => (
-              <TextField
-                id="outlined-basic"
-                label="Born / Aquired Date"
-                variant="outlined"
-              />
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={["DatePicker"]}>
+                  <DatePicker
+                    label="Born/Aquired Date"
+                    value={bornDate}
+                    onChange={(newValue) => setBornDate(newValue)}
+                  />
+                </DemoContainer>
+              </LocalizationProvider>
             )}
           />
           <Controller
@@ -121,15 +133,15 @@ export default function Info() {
           </Button>
         </Stack>
       </form>
-      {/* <TableContainer component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell align="right">Origin</TableCell>
+              <TableCell align="right">Born/Aquired Date</TableCell>
+              <TableCell align="right">Death Date</TableCell>
+              <TableCell align="right">Remarks</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -149,7 +161,7 @@ export default function Info() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
     </>
   );
 }
