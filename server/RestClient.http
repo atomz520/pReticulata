@@ -7,6 +7,15 @@ content-type: application/json
     "time": "Wed, 21 Oct 2015 18:27:50 GMT"
 }
 
+### Login
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "email": "admin@rivrmizt.com",
+  "password": "pReticulata"
+}
+
 ### Create a new user
 POST http://localhost:3001/users
 Content-Type: application/json
