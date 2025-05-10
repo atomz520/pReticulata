@@ -1,4 +1,7 @@
 import * as React from "react";
+
+import ImageUploader from "../components/imageuploader";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -69,6 +72,7 @@ export default function Info() {
 
   return (
     <>
+      <ImageUploader />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
           <Controller
