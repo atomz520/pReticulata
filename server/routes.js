@@ -35,10 +35,10 @@ router.post("/login", (req, res) => {
   }
 });
 
-router.post("/upload", (req, res) => {
-  const image = req.body;
-  console.log(image);
-  res.json({ message: "Image uploaded successfully" });
-});
+// router.post("/upload", (req, res) => {
+//   const image = req.body;
+//   console.log(image);
+//   res.json({ message: "Image uploaded successfully" });
+// });
 
 module.exports = router;

@@ -22,7 +22,7 @@ const ImageUploader = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/upload",
+        "http://localhost:5000/api/upload",
         formData,
         {
           headers: {
