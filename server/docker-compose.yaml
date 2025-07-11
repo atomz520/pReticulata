@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: guppy-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
