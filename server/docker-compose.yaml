@@ -1,12 +1,28 @@
+version: "3.8"
+
 services:
   mongo:
     image: mongo:6
-    container_name: guppy-mongo
+    restart: always
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    restart: unless-stopped
+
+  server:
+    build: .
+    container_name: guppy-server
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/guppydb
+    volumes:
+      - .:/usr/src/app
+      - ./uploads:/usr/src/app/uploads
+    depends_on:
+      - mongo
 
 volumes:
   mongo-data:
