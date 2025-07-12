@@ -48,8 +48,9 @@ type FormValues = {
   type: string;
   origin: string;
   born: string;
-  died: string;
-  remarks: string;
+  died?: string;
+  remarks?: string;
+  photo?: FileList;
 };
 
 export default function Info() {
@@ -66,8 +67,29 @@ export default function Info() {
 
   const [bornDate, setBornDate] = React.useState<Dayjs | null>(null);
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log("Form Data:", data);
+    const formData = new FormData();
+
+    formData.append("type", data.type);
+    formData.append("batch", data.origin); // assuming 'origin' is your 'batch'
+    formData.append("born", data.born);
+    formData.append("died", data.died || "");
+    formData.append("remarks", data.remarks || "");
+    if (data.photo && data.photo.length > 0) {
+      formData.append("photo", data.photo[0]);
+    }
+
+    try {
+      const res = await fetch("http://localhost:5001/api/info", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      console.log("Saved:", result);
+    } catch (err) {
+      console.error("Failed to submit:", err);
+    }
   };
 
   return (
@@ -81,6 +103,7 @@ export default function Info() {
             render={({ field }) => (
               <TextField
                 id="outlined-basic"
+                {...field}
                 label="Type Description"
                 variant="outlined"
               />

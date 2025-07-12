@@ -17,7 +17,7 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/guppydb
+      - MONGO_URI=mongodb://mongo:27017/pReticulata
     volumes:
       - .:/usr/src/app
       - ./uploads:/usr/src/app/uploads
