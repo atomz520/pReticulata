@@ -131,6 +131,7 @@ export default function Info() {
           <Controller
             name="born"
             control={control}
+            defaultValue={null}
             render={({ field }) => (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
