@@ -1,30 +1,30 @@
-import * as React from "react";
+import * as React from 'react';
 
-import ImageUploader from "../components/imageuploader";
+import ImageUploader from '../components/imageuploader';
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-import { Dayjs } from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { Stack } from "@mui/material";
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Stack } from '@mui/material';
 
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
 function createData(
   name: string,
@@ -37,17 +37,17 @@ function createData(
 }
 
 const rows = [
-  createData("Yellow Tails", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData('Yellow Tails', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
 type FormValues = {
   type: string;
   origin: string;
-  born: string;
+  born: null;
   died?: string;
   remarks?: string;
   photo?: FileList;
@@ -60,7 +60,7 @@ export default function Info() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const [origin, setOrigin] = React.useState("");
+  const [origin, setOrigin] = React.useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setOrigin(event.target.value);
   };
@@ -68,27 +68,27 @@ export default function Info() {
   const [bornDate, setBornDate] = React.useState<Dayjs | null>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log("Form Data:", data);
+    console.log('Form Data:', data);
     const formData = new FormData();
 
-    formData.append("type", data.type);
-    formData.append("batch", data.origin); // assuming 'origin' is your 'batch'
-    formData.append("born", data.born);
-    formData.append("died", data.died || "");
-    formData.append("remarks", data.remarks || "");
+    formData.append('type', data.type);
+    formData.append('batch', data.origin); // assuming 'origin' is your 'batch'
+    formData.append('born', data.born || '');
+    formData.append('died', data.died || '');
+    formData.append('remarks', data.remarks || '');
     if (data.photo && data.photo.length > 0) {
-      formData.append("photo", data.photo[0]);
+      formData.append('photo', data.photo[0]);
     }
 
     try {
-      const res = await fetch("http://localhost:5001/api/info", {
-        method: "POST",
+      const res = await fetch('http://localhost:5001/api/info', {
+        method: 'POST',
         body: formData,
       });
       const result = await res.json();
-      console.log("Saved:", result);
+      console.log('Saved:', result);
     } catch (err) {
-      console.error("Failed to submit:", err);
+      console.error('Failed to submit:', err);
     }
   };
 
@@ -100,6 +100,7 @@ export default function Info() {
           <Controller
             name="type"
             control={control}
+            defaultValue=""
             render={({ field }) => (
               <TextField
                 id="outlined-basic"
@@ -114,16 +115,15 @@ export default function Info() {
             control={control}
             render={({ field }) => (
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Origin</InputLabel>
+                <InputLabel id="origin-label">Origin</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={origin}
+                  labelId="origin-label"
                   label="Origin"
-                  onChange={handleChange}
+                  {...field}
+                  value={field.value ?? ''} // keep controlled
                 >
-                  <MenuItem value={"domestic"}>Domestic</MenuItem>
-                  <MenuItem value={"store"}>Store</MenuItem>
+                  <MenuItem value="domestic">Domestic</MenuItem>
+                  <MenuItem value="store">Store</MenuItem>
                 </Select>
               </FormControl>
             )}
@@ -133,22 +133,23 @@ export default function Info() {
             control={control}
             render={({ field }) => (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
-                  <DatePicker
-                    label="Born/Aquired Date"
-                    value={bornDate}
-                    onChange={(newValue) => setBornDate(newValue)}
-                  />
-                </DemoContainer>
+                <DatePicker
+                  label="Born/Acquired Date"
+                  value={field.value}
+                  onChange={(newVal) => field.onChange(newVal)}
+                  slotProps={{ textField: { fullWidth: true } }}
+                />
               </LocalizationProvider>
             )}
           />
           <Controller
             name="remarks"
             control={control}
+            defaultValue=""
             render={({ field }) => (
               <TextField
                 id="outlined-basic"
+                {...field}
                 label="Remarks"
                 variant="outlined"
               />
@@ -160,7 +161,7 @@ export default function Info() {
           </Button>
         </Stack>
       </form>
-      <TableContainer component={Paper}>
+      {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -175,7 +176,7 @@ export default function Info() {
             {rows.map((row) => (
               <TableRow
                 key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {row.name}
@@ -188,7 +189,7 @@ export default function Info() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 }
