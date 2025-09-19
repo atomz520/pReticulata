@@ -1,39 +1,12 @@
 ### Create a new Info entry (without photo)
-POST http://localhost:5001/api/info
+POST http://localhost:3000/batches
 Content-Type: application/json
 
-{
-  "batch": "Test Batch",
-  "type": "Blonde",
-  "born": "2025-07-01",
-  "died": "",
-  "remarks": "REST Client test entry"
-}
+{ "date": "2025-09-19", "notes": "31 May fry doing well" }
 
 ###
 
 ### Get all Info entries
-GET http://localhost:5001/api/info
+GET http://localhost:3000/batches
 
 ###
-
-### Create a new Fry Batch
-POST http://localhost:5001/api/fry_batch
-Content-Type: application/json
-
-{
-  "parent_m": "Test Male",
-  "parent_f": "Test Female",
-  "date_dropped": "2025-06-30",
-  "number_d": 50,
-  "number_1m": 5,
-  "number_2m": 10,
-  "number_m": 20,
-  "number_f": 25
-}
-
-###
-
-### Get all Fry Batches
-GET http://localhost:5001/api/fry_batch
-
