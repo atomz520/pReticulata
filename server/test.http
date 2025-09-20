@@ -2,7 +2,7 @@
 POST http://localhost:3000/batches
 Content-Type: application/json
 
-{ "date": "2025-09-19", "notes": "31 May fry doing well" }
+{ "date": "2025-09-19", "parent_male": "1", "parent_female": "2", "number_0m": 10, "number_1m": 20, "number_2m": 30, "number_male": 40, "number_female": 50, "notes": "31 May fry doing well" }
 
 ###
 
